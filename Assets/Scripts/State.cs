@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,7 @@ public class State
 {
    public enum STATE
     {
-        IDLE,PATROL,PURSUIT,ATTACK,SLEEP
+        IDLE,PATROL,PURSUE,ATTACK,SLEEP
 
     };
 
@@ -51,6 +52,27 @@ public class State
             return nextState;
         }
         return this;
+    }
+
+    public bool CanSeePlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Vector3.Angle(direction, npc.transform.forward);
+        if(direction.magnitude < visDist && angle < visAngle)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool CanAttackPlayer()
+    {
+        Vector3 direction = player.position - npc.transform.position;
+        if (direction.magnitude < shootDist)
+        {
+            return true;
+        }
+        return false;
     }
 
 
