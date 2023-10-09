@@ -12,4 +12,28 @@ public class Patrol : State
         agent.speed = 2;
         agent.isStopped = false;
     }
+
+    public override void Enter()
+    {
+        anim.SetTrigger("isWalking");
+        base.Enter();
+    }
+    public override void Update()
+    {
+        if(agent.remainingDistance < 1)
+        {
+            if (currentIndex > GameEnvironment.Singleton.Checkpoints.Count - 1)
+                currentIndex = 0;
+            else
+                currentIndex++;
+
+            agent.SetDestination(GameEnvironment.Singleton.Checkpoints[currentIndex].transform.position);
+        }
+        
+    }
+    public override void Exit()
+    {
+        anim.ResetTrigger("isWalking");
+        base.Exit();
+    }
 }
