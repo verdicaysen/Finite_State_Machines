@@ -23,6 +23,7 @@ public class State
     protected Animator anim;
     protected Transform player;
     protected State nextState;
+    //Could add lastState so that you could go back to a previous state.
     protected NavMeshAgent agent;
 
     float visDist = 10.0f;
